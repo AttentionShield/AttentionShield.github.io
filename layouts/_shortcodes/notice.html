@@ -1,0 +1,13 @@
+{{- /* 提示块：{{< notice tip >}}正文{{< /notice >}}
+   可用类型：tip（提示）/ note（注意）/ warning（警告）
+   用法：
+   {{< notice tip >}}
+   这里写内容，支持 **Markdown** 和 `代码`。
+   {{< /notice >}}
+*/ -}}
+{{- $type := "tip" -}}
+{{- if .Get "type" }}{{ $type = .Get "type" }}{{ end -}}
+{{- if .Get 0 }}{{ $type = .Get 0 }}{{ end -}}
+{{- $labels := dict "tip" "提示" "note" "注意" "warning" "警告" -}}
+{{- $label := index $labels $type | default (upper $type) -}}
+<div class="notice notice-{{ $type }}"><span class="notice-label">{{ $label }}</span>{{ .Inner | markdownify }}</div>

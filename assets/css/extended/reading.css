@@ -1,0 +1,838 @@
+/* ============================================
+   极简阅读样式 —— 覆盖 PaperMod 默认外观
+   目标：白纸黑字，视觉层级只靠字号与留白
+   ============================================ */
+
+/* ---------- 中文字体栈 ---------- */
+:root {
+    --main-width: 46rem;          /* 正文约 736px，中文长文一行 40 字左右 */
+    --nav-width: 46rem;           /* 导航与正文左边界对齐 */
+    --header-height: 64px;
+    --footer-height: 56px;
+
+    --theme: #ffffff;
+    --entry: #ffffff;
+    --primary: #1a1a1a;
+    --secondary: #767676;
+    --tertiary: #e2e2e2;
+    --content: #262626;
+    --border: #ebebeb;
+    --code-bg: #f7f7f8;
+
+    /* 正文排版 */
+    --body-size: 17px;
+    --body-line-height: 1.9;
+}
+
+:root[data-theme="dark"] {
+    --theme: #16171a;
+    --entry: #16171a;
+    --primary: #e6e6e6;
+    --secondary: #9a9a9e;
+    --tertiary: #3a3b3f;
+    --content: #cfcfd2;
+    --border: #2a2b2e;
+    --code-bg: #1e1f23;
+}
+
+/* ---------- 正文排版：这是重点 ---------- */
+.post-content {
+    font-size: var(--body-size);
+    line-height: var(--body-line-height);
+    color: var(--content);
+    letter-spacing: 0.01em;
+    word-wrap: break-word;
+}
+
+/* 中文正文两端对齐更整齐，但保持 left 作兜底 */
+.post-content p {
+    margin: 1.1em 0;
+}
+
+/* 标题：只靠字号和字重，不加装饰 */
+.post-content h1,
+.post-content h2,
+.post-content h3,
+.post-content h4,
+.post-content h5,
+.post-content h6 {
+    font-weight: 650;
+    line-height: 1.45;
+    margin: 2.2em 0 0.9em;
+    color: var(--primary);
+    letter-spacing: 0;
+}
+
+/* h2 加一条细分隔线，视觉分区但不用色块 */
+.post-content h2 {
+    padding-bottom: 0.35em;
+    border-bottom: 1px solid var(--border);
+}
+
+.post-content h3,
+.post-content h4 {
+    font-weight: 620;
+}
+
+/* 首段不缩进（Markdown 里第一段通常紧跟标题） */
+.post-content > p:first-of-type {
+    margin-top: 0;
+}
+
+/* 链接：低调下划线，不用彩色块 */
+.post-content a {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: var(--tertiary);
+    text-underline-offset: 3px;
+    transition: text-decoration-color 0.15s ease;
+}
+
+.post-content a:hover {
+    text-decoration-color: currentColor;
+}
+
+/* 引用块：左侧一条细线，不要背景色 */
+.post-content blockquote {
+    border-left: 3px solid var(--tertiary);
+    background: transparent;
+    padding: 0.2em 0 0.2em 1.1em;
+    margin: 1.4em 0;
+    color: var(--secondary);
+    font-style: normal;
+}
+
+.post-content blockquote > :first-child { margin-top: 0; }
+.post-content blockquote > :last-child { margin-bottom: 0; }
+
+/* 列表 */
+.post-content ul,
+.post-content ol {
+    padding-left: 1.5em;
+    margin: 1em 0;
+}
+
+.post-content li { margin: 0.35em 0; }
+.post-content li > ul,
+.post-content li > ol { margin: 0.3em 0; }
+
+/* 行内代码：浅底、圆角小一点 */
+.post-content code {
+    background: var(--code-bg);
+    border-radius: 4px;
+    padding: 0.15em 0.4em;
+    font-size: 0.875em;
+    font-family: ui-monospace, "Cascadia Code", "JetBrains Mono", Consolas, "Courier New", monospace;
+    word-break: break-word;
+}
+
+/* 代码块：保留深色底，与正文区分 */
+.post-content pre {
+    margin: 1.5em 0;
+    border-radius: 6px;
+    padding: 1em 1.1em;
+    font-size: 0.85em;
+    line-height: 1.65;
+    overflow-x: auto;
+}
+
+.post-content pre code {
+    background: transparent;
+    padding: 0;
+    font-size: inherit;
+    word-break: normal;
+}
+
+/* 表格：只留横线，不要竖线和重底色 */
+.post-content table {
+    width: 100%;
+    margin: 1.5em 0;
+    border-collapse: collapse;
+    font-size: 0.94em;
+    display: block;
+    overflow-x: auto;
+}
+
+.post-content table th {
+    font-weight: 600;
+    text-align: left;
+    border-bottom: 2px solid var(--tertiary);
+}
+
+.post-content table td,
+.post-content table th {
+    padding: 0.55em 0.9em;
+    border-bottom: 1px solid var(--border);
+}
+
+.post-content table tbody tr:last-child td {
+    border-bottom: 1px solid var(--tertiary);
+}
+
+/* 图片 */
+.post-content img {
+    border-radius: 4px;
+    margin: 1.5em 0;
+    max-width: 100%;
+}
+
+/* 脚注 */
+.post-content .footnotes {
+    font-size: 0.9em;
+    color: var(--secondary);
+    border-top: 1px solid var(--border);
+    margin-top: 3em;
+    padding-top: 1em;
+}
+
+/* 提示块（::: 语法）压低存在感 */
+.post-content .alert {
+    border-left: 3px solid var(--tertiary);
+    background: var(--code-bg);
+    border-radius: 0 6px 6px 0;
+    padding: 0.9em 1.1em;
+    margin: 1.5em 0;
+    font-size: 0.95em;
+}
+
+.post-content .alert > :first-child { margin-top: 0; }
+.post-content .alert > :last-child { margin-bottom: 0; }
+
+/* ---------- 文章页头 ---------- */
+.post-header {
+    margin-bottom: 2rem;
+}
+
+.post-meta {
+    font-size: 0.82rem;
+    color: var(--secondary);
+    font-variant-numeric: tabular-nums;
+    margin-top: 0.6rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+/* ---------- 文章列表页 ---------- */
+.post-entry {
+    margin: 2.4rem 0;
+}
+
+.post-entry-header {
+    margin-bottom: 0.3rem;
+    font-size: 1.28rem;
+    font-weight: 620;
+    line-height: 1.4;
+}
+
+/* 标题默认给一点左缩进，与正文左边界一致 */
+.post-title {
+    margin-left: -1.4rem;
+    transition: margin-left 0.15s ease;
+}
+
+.post-entry:hover .post-title {
+    margin-left: 0;
+}
+
+.post-entry-content {
+    color: var(--secondary);
+    font-size: 0.95rem;
+    line-height: 1.75;
+    margin-top: 0.5rem;
+}
+
+.post-entry-footer {
+    margin-top: 0.6rem;
+    font-size: 0.8rem;
+    color: var(--secondary);
+}
+
+/* ---------- 归档页 ---------- */
+.archive-year {
+    margin-bottom: 1rem;
+}
+
+.archive-year-header {
+    font-size: 1.6rem;
+    margin: 2rem 0 0.8rem;
+    padding-bottom: 0.3rem;
+    border-bottom: 2px solid var(--tertiary);
+}
+
+.archive-year-header a { color: var(--primary); }
+
+.archive-month-header {
+    font-size: 1.05rem;
+    margin: 1.6rem 0 0.5rem;
+    color: var(--secondary);
+    font-weight: 600;
+}
+
+.archive-month-header a { color: inherit; }
+
+.archive-count {
+    font-size: 0.65em;
+    color: var(--secondary);
+    font-weight: 400;
+    vertical-align: super;
+}
+
+.archive-posts {
+    margin-left: 0.5rem;
+    border-left: 1px solid var(--border);
+    padding-left: 1.2rem;
+}
+
+.archive-entry {
+    position: relative;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.archive-entry:last-child { border-bottom: none; }
+
+.archive-entry-title {
+    font-size: 1rem;
+    font-weight: 550;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.archive-meta {
+    font-size: 0.78rem;
+    color: var(--secondary);
+    margin-top: 0.15rem;
+}
+
+/* 整行可点，但不显示下划线（视觉上仍是文字列表） */
+.archive-entry .entry-link {
+    position: absolute;
+    inset: 0;
+    text-decoration: none;
+}
+
+.archive-entry .entry-hint-parent { position: relative; z-index: 1; }
+
+/* ---------- 标签页 ---------- */
+.tags-section ul,
+.terms-list {
+    list-style: none;
+    padding: 0;
+}
+
+.terms-list li {
+    display: inline-block;
+    margin: 0.35rem 0.35rem 0 0;
+}
+
+.tag-pill {
+    display: inline-block;
+    padding: 0.18em 0.65em;
+    border: 1px solid var(--tertiary);
+    border-radius: 999px;
+    font-size: 0.82rem;
+    color: var(--secondary);
+    text-decoration: none;
+}
+
+.tag-pill:hover {
+    color: var(--content);
+    border-color: var(--secondary);
+}
+
+/* 数字统计：像脚注一样低调 */
+.term-count {
+    font-size: 0.75em;
+    color: var(--secondary);
+    margin-left: 0.25em;
+}
+
+/* ---------- 页眉 ---------- */
+.header-nav {
+    padding: 0;
+    align-items: baseline;
+}
+
+.logo a {
+    font-size: 1rem;
+    font-weight: 650;
+    letter-spacing: 0;
+}
+
+.menu {
+    gap: 1.1rem;
+    font-size: 0.88rem;
+}
+
+/* 品牌与导航之间的竖线分隔（同参考站） */
+.header-nav .logo::after {
+    content: "|";
+    color: var(--tertiary);
+    margin-left: 0.7rem;
+    font-weight: 300;
+}
+
+@media (max-width: 480px) {
+    .header-nav .logo::after { content: none; }
+}
+
+/* ---------- 页脚 ---------- */
+.footer {
+    font-size: 0.8rem;
+    color: var(--secondary);
+    padding: 1.5rem 0 2rem;
+    border-top: 1px solid var(--border);
+}
+
+/* ---------- 首页简介块 ---------- */
+.home-info {
+    padding: 1rem 0 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.home-info .entry-header h1 {
+    font-size: 1.7rem;
+    margin-bottom: 0.5rem;
+}
+
+.home-info p {
+    color: var(--secondary);
+    font-size: 0.95rem;
+    margin: 0.3em 0;
+}
+
+/* ---------- 目录：默认展开，内容优先 ---------- */
+.toc {
+    font-size: 0.86rem;
+    margin: 0 0 2.2rem;
+    padding: 0.9em 1.1em;
+    background: var(--code-bg);
+    border-radius: 6px;
+    border-left: 3px solid var(--tertiary);
+}
+
+.toc > summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--primary);
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 0.4em;
+}
+
+.toc > summary::-webkit-details-marker { display: none; }
+
+.toc > summary::before {
+    content: "\25BE";
+    font-size: 0.8em;
+    color: var(--secondary);
+}
+
+.toc[open] > summary::before { content: "\25B4"; }
+
+.toc .inner {
+    margin-top: 0.6em;
+}
+
+.toc ul {
+    margin: 0;
+    padding-left: 1.2em;
+}
+
+.toc > .inner > ul { padding-left: 0.2em; }
+
+.toc li { margin: 0.2em 0; }
+
+.toc a {
+    color: var(--secondary);
+    text-decoration: none;
+}
+
+.toc a:hover {
+    color: var(--content);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+/* ---------- 移动端 ---------- */
+@media (max-width: 768px) {
+    :root { --body-size: 16px; --body-line-height: 1.85; }
+    .post-title { margin-left: 0; }
+    .post-content h2 { margin-top: 1.8em; }
+    .archive-year-header { font-size: 1.35rem; }
+}
+
+/* ---------- 自定义页脚 ---------- */
+.footer-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.footer-sep {
+    color: var(--tertiary);
+}
+
+.footer-inner a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.footer-inner a:hover {
+    color: var(--content);
+}
+
+/* ---------- 提示块 ---------- */
+.notice {
+    position: relative;
+    margin: 1.5em 0;
+    padding: 0.9em 1.1em 0.9em 3.4em;
+    background: var(--code-bg);
+    border-radius: 6px;
+    font-size: 0.95em;
+    line-height: 1.75;
+}
+
+.notice > p { margin: 0; }
+.notice > p + p { margin-top: 0.7em; }
+
+.notice-label {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2.6em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8em;
+    font-weight: 600;
+    color: var(--secondary);
+    background: var(--tertiary);
+    border-radius: 6px 0 0 6px;
+    writing-mode: vertical-rl;
+    letter-spacing: 0.12em;
+    padding: 0.6em 0;
+    user-select: none;
+}
+
+.notice p code {
+    background: var(--theme);
+}
+
+/* 警示类用暖色区分，提示/注意保持中性 */
+.notice-warning .notice-label { color: #b45309; background: #fde68a; }
+.notice-warning { background: #fffbeb; }
+:root[data-theme="dark"] .notice-warning { background: #2a2317; }
+:root[data-theme="dark"] .notice-warning .notice-label { color: #2a2317; background: #d97706; }
+
+/* ============================================
+   首页：纯文字列表，不用卡片
+   ============================================ */
+.site-title {
+    font-size: 1.5rem;
+    font-weight: 650;
+    margin: 1.5rem 0 0.3rem;
+    color: var(--primary);
+}
+
+.site-subtitle {
+    color: var(--secondary);
+    font-size: 0.92rem;
+    margin: 0 0 2rem;
+}
+
+.post-list { margin-top: 0.5rem; }
+
+/* 去掉 PaperMod 默认的卡片底色和边框，改为纯文字条目 */
+.post-list .post-entry {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--border);
+    border-radius: 0;
+    padding: 1.3rem 0;
+    margin: 0;
+    transition: none;
+}
+
+.post-list .post-entry:last-child { border-bottom: none; }
+
+.post-list .post-entry-header {
+    font-size: 1.18rem;
+    margin-bottom: 0.25rem;
+}
+
+.post-list .post-title {
+    margin-left: 0;
+    color: var(--primary);
+    text-decoration: none;
+}
+
+.post-list .post-title:hover {
+    color: var(--secondary);
+}
+
+.post-list .post-entry-content {
+    margin: 0.25rem 0 0.45rem;
+    color: var(--secondary);
+    font-size: 0.92rem;
+    line-height: 1.7;
+}
+
+.post-list .post-entry-footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.8rem;
+    color: var(--secondary);
+    font-variant-numeric: tabular-nums;
+}
+
+.meta-sep { color: var(--tertiary); }
+
+.entry-tags { color: var(--tertiary); }
+
+.more-link {
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.92rem;
+}
+
+.more-link a {
+    color: var(--secondary);
+    text-decoration: none;
+}
+
+.more-link a:hover { color: var(--content); }
+
+.no-posts {
+    color: var(--secondary);
+    padding: 2rem 0;
+}
+
+/* ============================================
+   基准字号重置
+   PaperMod 在 html 上设了 font-size:18px，会把所有 rem/em 放大。
+   这里改回 16px 基准，正文字号由 .post-content 单独控制。
+   ============================================ */
+html {
+    font-size: 16px;
+}
+
+/* ============================================
+   基准字号重置
+   PaperMod 在 html 上设了 font-size:18px，会把所有 rem/em 放大。
+   这里改回 16px 基准，正文字号由 .post-content 单独控制。
+   ============================================ */
+html {
+    font-size: 16px;
+}
+
+/* ---------- 最终字号微调 ---------- */
+
+/* 列表标题：主题 md-content 对 h2 有额外放大，这里用 px 锁定 */
+.post-list .post-entry-header {
+    font-size: 1.02rem;
+    line-height: 1.55;
+}
+
+.post-list .post-entry-header .post-title {
+    font-size: inherit;
+}
+
+/* 文章页标题 */
+.post-title,
+h1.post-title {
+    font-size: 1.5rem;
+    line-height: 1.4;
+    margin-bottom: 0.5rem;
+}
+
+.site-title { font-size: 1.25rem; }
+
+/* 文章正文标题层级压紧 */
+.post-content h1 { font-size: 1.4rem; }
+.post-content h2 { font-size: 1.16rem; }
+.post-content h3 { font-size: 1.04rem; }
+.post-content h4 { font-size: 0.98rem; }
+
+/* ---------- 最终字号微调 ---------- */
+
+/* 列表标题：主题 md-content 对 h2 有额外放大，这里用 px 锁定 */
+.post-list .post-entry-header {
+    font-size: 1.02rem;
+    line-height: 1.55;
+}
+
+.post-list .post-entry-header .post-title {
+    font-size: inherit;
+}
+
+/* 文章页标题 */
+.post-title,
+h1.post-title {
+    font-size: 1.5rem;
+    line-height: 1.4;
+    margin-bottom: 0.5rem;
+}
+
+.site-title { font-size: 1.25rem; }
+
+/* 文章正文标题层级压紧 */
+.post-content h1 { font-size: 1.4rem; }
+.post-content h2 { font-size: 1.16rem; }
+.post-content h3 { font-size: 1.04rem; }
+.post-content h4 { font-size: 0.98rem; }
+
+/* ============================================
+   正文可读性微调
+   ============================================ */
+
+/* 中文长文：字号略提，行高保持宽松 */
+.post-content {
+    font-size: 1.0rem;
+    line-height: 1.95;
+}
+
+/* 代码块：浅色主题下用浅底深字，不要一坨黑 */
+:root {
+    --code-block-bg: #f6f8fa;
+}
+
+:root[data-theme="dark"] {
+    --code-block-bg: #1c1d21;
+}
+
+/* 代码块内的语法高亮改用 github light */
+.post-content .highlight {
+    background: var(--code-block-bg) !important;
+}
+
+.post-content .highlight pre,
+.post-content pre {
+    background: var(--code-block-bg);
+}
+
+/* 行内代码在浅底上要更清晰 */
+.post-content code {
+    background: #f0f1f3;
+    color: #b8306b;
+}
+
+:root[data-theme="dark"] .post-content code {
+    background: #2a2b30;
+    color: #f0a5c8;
+}
+
+/* 目录区域收紧一点 */
+.toc {
+    margin-bottom: 1.8rem;
+    padding: 0.8em 1em;
+}
+
+/* 提示块标签竖排时太窄，加宽一点 */
+.notice {
+    padding-left: 3.2em;
+}
+
+/* ============================================
+   代码高亮配色调正
+   PaperMod 自带一套深色（catppuccin）语法色，硬编码在 chroma-styles.css，
+   而 extended 层的样式表顺序在其之后，所以这里用 !important 压过去。
+   ============================================ */
+:root .post-content .chroma { color: #24292f !important; background-color: var(--code-block-bg) !important; }
+:root .post-content .chroma .err { color: #b31d28 !important; }
+:root .post-content .chroma .hl { background-color: #fff8c5 !important; }
+:root .post-content .chroma .lnt,
+:root .post-content .chroma .ln { color: #8b949e !important; }
+:root .post-content .chroma .k,
+:root .post-content .chroma .kc,
+:root .post-content .chroma .kd,
+:root .post-content .chroma .kn,
+:root .post-content .chroma .kp,
+:root .post-content .chroma .kr { color: #cf222e !important; }
+:root .post-content .chroma .kt { color: #953800 !important; }
+:root .post-content .chroma .n { color: #24292f !important; }
+:root .post-content .chroma .na,
+:root .post-content .chroma .nb,
+:root .post-content .chroma .ni,
+:root .post-content .chroma .ne,
+:root .post-content .chroma .nl { color: #0550ae !important; }
+:root .post-content .chroma .nc,
+:root .post-content .chroma .nn,
+:root .post-content .chroma .nf,
+:root .post-content .chroma .fm,
+:root .post-content .chroma .nd { color: #8250df !important; }
+:root .post-content .chroma .nt { color: #116329 !important; }
+:root .post-content .chroma .nv,
+:root .post-content .chroma .vc,
+:root .post-content .chroma .vg,
+:root .post-content .chroma .vi { color: #953800 !important; }
+:root .post-content .chroma .s,
+:root .post-content .chroma .sa,
+:root .post-content .chroma .sb,
+:root .post-content .chroma .sc,
+:root .post-content .chroma .dl,
+:root .post-content .chroma .sd,
+:root .post-content .chroma .s2,
+:root .post-content .chroma .se,
+:root .post-content .chroma .sh,
+:root .post-content .chroma .si,
+:root .post-content .chroma .sx,
+:root .post-content .chroma .s1 { color: #0a3069 !important; }
+:root .post-content .chroma .sr { color: #116329 !important; }
+:root .post-content .chroma .ss { color: #0550ae !important; }
+:root .post-content .chroma .m,
+:root .post-content .chroma .mb,
+:root .post-content .chroma .mf,
+:root .post-content .chroma .mh,
+:root .post-content .chroma .mi,
+:root .post-content .chroma .il,
+:root .post-content .chroma .mo { color: #0550ae !important; }
+:root .post-content .chroma .o,
+:root .post-content .chroma .ow { color: #cf222e !important; }
+:root .post-content .chroma .c,
+:root .post-content .chroma .ch,
+:root .post-content .chroma .cm,
+:root .post-content .chroma .cp,
+:root .post-content .chroma .cpf { color: #6e7781 !important; font-style: italic !important; }
+:root .post-content .chroma .gd { color: #82071e !important; background-color: #ffebe9 !important; }
+:root .post-content .chroma .gi { color: #116329 !important; background-color: #e6ffec !important; }
+:root .post-content .chroma .ge { font-style: italic !important; }
+:root .post-content .chroma .gs { font-weight: 600 !important; }
+:root .post-content .chroma .gh,
+:root .post-content .chroma .gu { color: #0550ae !important; font-weight: 600 !important; }
+:root .post-content .chroma .gp { color: #6e7781 !important; }
+:root .post-content .chroma .gt { color: #82071e !important; }
+
+/* 深色模式：交还给主题自带的深色配色 */
+
+/* 无语言标记的代码块（```text / ```plaintext）：chroma 会给 .cl 兜底浅色 */
+:root .post-content .chroma .cl,
+:root .post-content .chroma .line,
+:root .post-content .chroma .x { color: #24292f !important; }
+
+:root[data-theme="dark"] .post-content .chroma .cl,
+:root[data-theme="dark"] .post-content .chroma .line,
+:root[data-theme="dark"] .post-content .chroma .x { color: #cad3f5 !important; }
+
+/* 深色模式下整体代码块配色也用主题那套 */
+:root[data-theme="dark"] .post-content .chroma { background-color: var(--code-block-bg) !important; }
+
+/* 无语言标记的代码块（```text / ```plaintext）：chroma 会给 .cl 兜底浅色 */
+:root .post-content .chroma .cl,
+:root .post-content .chroma .line,
+:root .post-content .chroma .x { color: #24292f !important; }
+
+:root[data-theme="dark"] .post-content .chroma .cl,
+:root[data-theme="dark"] .post-content .chroma .line,
+:root[data-theme="dark"] .post-content .chroma .x { color: #cad3f5 !important; }
+
+/* 深色模式下整体代码块配色也用主题那套 */
+:root[data-theme="dark"] .post-content .chroma { background-color: var(--code-block-bg) !important; }

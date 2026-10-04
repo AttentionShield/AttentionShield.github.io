@@ -1,0 +1,51 @@
+{{- define "main" -}}
+<main class="main-inner">
+  <header class="page-header">
+    <h1 class="site-title">{{ .Title }}</h1>
+    {{- with .Params.subtitle | default site.Params.description }}
+    <p class="site-subtitle">{{ . }}</p>
+    {{- end }}
+  </header>
+
+  {{- $pages := where site.RegularPages "Type" "in" site.Params.mainSections }}
+  {{- $limit := site.Params.homePostsCount | default 0 }}
+  {{- if $limit }}{{ $pages = first $limit $pages }}{{ end }}
+
+  {{- if $pages }}
+  <div class="post-list">
+    {{- range $pages }}
+    <article class="post-entry">
+      <h2 class="post-entry-header">
+        <a class="post-title" href="{{ .RelPermalink }}">{{ .Title }}</a>
+      </h2>
+      {{- with .Description | default .Summary }}
+      <p class="post-entry-content">{{ . | plainify | truncate 150 }}</p>
+      {{- end }}
+      <div class="post-entry-footer">
+        {{- if not .Date.IsZero }}
+        <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format (default ":date_long" site.Params.DateFormat) }}</time>
+        {{- end }}
+        {{- if .ReadingTime }}
+        <span class="meta-sep">·</span>
+        <span>{{ i18n "read_time" .ReadingTime | default (printf "%d 分钟" .ReadingTime) }}</span>
+        {{- end }}
+        {{- with .Params.tags }}
+        <span class="meta-sep">·</span>
+        <span class="entry-tags">{{ delimit . " / " }}</span>
+        {{- end }}
+      </div>
+    </article>
+    {{- end }}
+  </div>
+
+  {{- $total := len (where site.RegularPages "Type" "in" site.Params.mainSections) }}
+  {{- if and $limit (gt $total $limit) }}
+  <div class="more-link">
+    <a href="{{ "/posts/" | relURL }}">查看全部 {{ $total }} 篇文章 →</a>
+  </div>
+  {{- end }}
+  {{- else }}
+  <p class="no-posts">还没有文章。去 <code>content/posts/</code> 放一个 <code>.md</code> 文件试试。</p>
+  {{- end }}
+</main>
+{{- end }}

@@ -1,0 +1,14 @@
+# Hugo 构建产物
+/public/
+/resources/
+.hugo_build.lock
+
+# 编辑器 / 系统
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+
+# 本地临时预览（tools/preview.py 的输出目录）
+/preview/

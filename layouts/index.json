@@ -1,0 +1,17 @@
+{{- /* 全站搜索索引：覆盖 PaperMod 主题的同名模板
+     Hugo 新版模板查找规则下，主题的 layouts/index.json 不会被首页的 JSON 输出格式匹配到，
+     所以在项目层提供同名模板，确保 /index.json 一定生成。 */ -}}
+{{- $index := slice -}}
+{{- range site.RegularPages -}}
+    {{- if and (not .Params.searchHidden) (ne .Layout `archives`) (ne .Layout `search`) -}}
+        {{- $index = $index | append (dict
+            "title" .Title
+            "content" .Plain
+            "permalink" .Permalink
+            "summary" (.Summary | plainify)
+            "date" (.Date.Format "2006-01-02")
+            "tags" (.Params.tags | default slice)
+        ) -}}
+    {{- end -}}
+{{- end -}}
+{{- $index | jsonify -}}
