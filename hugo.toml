@@ -3,7 +3,7 @@ theme = 'PaperMod'
 locale = 'zh-cn'
 defaultContentLanguage = 'zh'
 defaultContentLanguageInSubdir = false
-title = '薇薇的技术笔记'
+title = 'MindSaver 的技术笔记'
 enableRobotsTXT = true
 enableEmoji = true
 enableGitInfo = false
@@ -71,7 +71,7 @@ disableHugoGeneratorInject = true
 [params]
   env = 'production'
   description = '一个专注于内容本身的技术博客。'
-  author = '薇薇'
+  author = 'MindSaver'
   defaultTheme = 'auto'
   disableThemeToggle = false
   ShowReadingTime = true
@@ -90,7 +90,7 @@ disableHugoGeneratorInject = true
   homePostsCount = 0
 
   [params.label]
-    text = '薇薇的技术笔记'
+    text = 'MindSaver 的技术笔记'
     icon = ''
     iconHeight = 30
     iconSVG = ''
@@ -99,7 +99,7 @@ disableHugoGeneratorInject = true
   profileMode = false
 
   [params.homeInfoParams]
-    Title = '薇薇的技术笔记'
+    Title = 'MindSaver 的技术笔记'
     Content = '写代码、踩坑、读书的地方。这里只有文字。'
 
   [params.assets]

@@ -1,4 +1,4 @@
-# 薇薇的技术笔记
+# MindSaver 的技术笔记
 
 一个只放文字的技术博客。Hugo + PaperMod，静态生成，无成本无依赖。
 
@@ -113,7 +113,7 @@ tools/
 
 ```toml
 # 站点标题和地址
-title = '薇薇的技术笔记'
+title = 'MindSaver 的技术笔记'
 baseURL = 'https://你的域名/'
 
 # 首页显示多少篇文章（留空/0 = 全部）
