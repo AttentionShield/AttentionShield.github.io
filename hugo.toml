@@ -1,4 +1,4 @@
-baseURL = 'https://example.com/'
+baseURL = 'https://attentionshield.github.io/'
 theme = 'PaperMod'
 locale = 'zh-cn'
 defaultContentLanguage = 'zh'

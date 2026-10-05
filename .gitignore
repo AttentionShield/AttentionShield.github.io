@@ -3,6 +3,9 @@
 /resources/
 .hugo_build.lock
 
+# AI 助手工作笔记（内部资料，不上传网站仓库）
+.workbuddy/
+
 # 编辑器 / 系统
 .vscode/
 .idea/

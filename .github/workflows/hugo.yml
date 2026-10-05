@@ -1,0 +1,65 @@
+# Hugo 博客自动部署
+#
+# 每次 push 到 main 分支（或手动触发）：
+#   1. 检出代码 + PaperMod 子模块
+#   2. 安装 Hugo Extended 并构建
+#   3. 把产物发布到 GitHub Pages
+#
+# ⚠️ 首次使用前，需要到仓库的 Settings → Pages，
+#    把 Source 设置为 "GitHub Actions"，否则部署会失败。
+
+name: Deploy Hugo site to Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: # 允许在 Actions 页面手动触发
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 同一时间只跑一个部署，新推送会取消进行中的旧部署
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出代码（含主题子模块）
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive # PaperMod 主题是 submodule，必须递归检出
+          fetch-depth: 0
+
+      - name: 安装 Hugo Extended
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: '0.167.0'
+          extended: true
+
+      - name: 构建
+        run: hugo --minify --gc
+
+      - name: 上传构建产物
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./public
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: 发布到 GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
