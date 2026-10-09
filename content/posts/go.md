@@ -1,8 +1,7 @@
 +++
 title = "第一篇博客"
 date = '2026-10-09T19:47:31+08:00'
-draft = true
-title = 'Go'
+draft = false
 +++
 
 ## 自我介绍
