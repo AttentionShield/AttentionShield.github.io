@@ -1,11 +1,10 @@
 {{- define "main" -}}
-<main class="main-inner">
-  <header class="page-header">
-    <h1 class="site-title">{{ .Title }}</h1>
-    {{- with .Params.subtitle | default site.Params.description }}
-    <p class="site-subtitle">{{ . }}</p>
-    {{- end }}
-  </header>
+<header class="page-header home-header">
+  <h1 class="site-title">{{ .Title }}</h1>
+  {{- with .Params.subtitle | default site.Params.description }}
+  <p class="site-subtitle">{{ . }}</p>
+  {{- end }}
+</header>
 
   {{- $pages := where site.RegularPages "Type" "in" site.Params.mainSections }}
   {{- $limit := site.Params.homePostsCount | default 0 }}
@@ -47,5 +46,4 @@
   {{- else }}
   <p class="no-posts">还没有文章。去 <code>content/posts/</code> 放一个 <code>.md</code> 文件试试。</p>
   {{- end }}
-</main>
 {{- end }}

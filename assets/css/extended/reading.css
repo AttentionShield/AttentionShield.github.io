@@ -836,3 +836,150 @@ h1.post-title {
 
 /* 深色模式下整体代码块配色也用主题那套 */
 :root[data-theme="dark"] .post-content .chroma { background-color: var(--code-block-bg) !important; }
+
+/* ============================================
+   移动端适配（390px 主断点 / 480px / 340px）
+   ============================================ */
+
+/* ---------- 平板与手机（≤768px）---------- */
+@media (max-width: 768px) {
+    /* --- 页头：防溢出 --- */
+    .header-nav {
+        line-height: 1.4;               /* 解除 60px 行高锁，允许两行 */
+        padding: 0.8rem var(--gap);
+        align-items: center;
+    }
+
+    .logo a {
+        font-size: 0.92rem !important;   /* 主题硬编码 24px，必须压 */
+        font-weight: 650;
+        white-space: nowrap;
+    }
+
+    /* 品牌与菜单之间的竖线：小屏去掉 */
+    .header-nav .logo::after { content: none; }
+
+    .menu {
+        gap: 0.9rem;
+        flex-wrap: nowrap;
+        overflow-x: auto;               /* 极端窄屏时菜单可横滑兜底 */
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+
+    .menu::-webkit-scrollbar { display: none; }
+
+    /* 主题用 .menu a { font-size:16px } 直接命中链接，需同级覆盖 */
+    .menu a { font-size: 0.82rem; }
+
+    /* 主题把 page-header h1 硬编码为 40px，这里压回来 */
+    .page-header h1 {
+        font-size: 1.45rem;
+        line-height: 1.35;
+        overflow-wrap: anywhere;        /* 长标题强制换行，杜绝横向溢出 */
+    }
+
+    .page-header h1.site-title {
+        font-size: 1.3rem;
+    }
+
+    /* --- 首页文章列表 --- */
+    .site-title { font-size: 1.3rem; }
+
+    .post-list .post-entry {
+        padding: 1.1rem 0;
+    }
+
+    .post-list .post-entry-header { font-size: 1.02rem; }
+
+    /* --- 正文 --- */
+    :root { --body-size: 16px; --body-line-height: 1.85; }
+
+    .post-content h2 { margin-top: 1.7em; font-size: 1.14rem; }
+    .post-content h3 { font-size: 1.02rem; }
+
+    /* 代码块：窄屏收紧 */
+    .post-content pre {
+        font-size: 0.78em;
+        padding: 0.85em 0.9em;
+        border-radius: 5px;
+    }
+
+    .post-content code { font-size: 0.84em; }
+
+    /* 提示块：竖排标签略收窄 */
+    .notice { padding-left: 3em; }
+
+    /* --- 归档页 --- */
+    .archive-year-header { font-size: 1.3rem; }
+    .archive-posts { padding-left: 0.9rem; }
+    .archive-entry-title { font-size: 0.95rem; }
+    .archive-meta { font-size: 0.74rem; }
+
+    /* --- 目录 --- */
+    .toc { padding: 0.7em 0.9em; }
+
+    /* --- 页脚：允许换行居中 --- */
+    .footer {
+        flex-wrap: wrap;
+        justify-content: center;
+        text-align: center;
+        row-gap: 0.35rem;
+        padding: 1.2rem var(--gap) 1.6rem;
+        line-height: 1.6;
+    }
+
+    /* --- 上下篇导航 --- */
+    .paginav {
+        flex-direction: column;
+        gap: 0.6rem;
+    }
+
+    .paginav a { width: 100%; }
+
+    /* --- 返回顶部按钮：别挡内容 --- */
+    .top-link {
+        right: 1rem;
+        bottom: 1rem;
+        opacity: 0.85;
+    }
+}
+
+/* ---------- 小手机（≤480px）---------- */
+@media (max-width: 480px) {
+    .logo a { font-size: 0.88rem !important; }
+    .menu { gap: 0.75rem; }
+    .menu a { font-size: 0.78rem; }
+
+    .post-list .post-entry-content { font-size: 0.9rem; }
+
+    /* meta 行（日期 · 时长 · 作者）允许自然换行 */
+    .post-meta { row-gap: 0.2rem; }
+
+    /* 表格横向滚动提示性内边距 */
+    .post-content table { font-size: 0.88em; }
+}
+
+/* ---------- 极窄屏（≤340px）---------- */
+@media (max-width: 340px) {
+    .menu { gap: 0.55rem; }
+    .menu a { font-size: 0.74rem; }
+    .page-header h1 { font-size: 1.2rem; }
+}
+
+/* ---------- 页脚布局修正 ----------
+   主题的 .footer 是普通块级流（span + · + span），
+   窄屏一行放不下会硬撑。改为 flex 换行居中。 */
+.footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: baseline;
+    column-gap: 0.4rem;
+    row-gap: 0.3rem;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .footer { padding: 1.1rem var(--gap) 1.5rem; font-size: 0.76rem; }
+}
