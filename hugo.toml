@@ -104,7 +104,10 @@ disableHugoGeneratorInject = true
 
   [params.assets]
     favicon = 'favicon.png'
-    logo = ''
+    favicon16x16 = 'favicon.png'
+    favicon32x32 = 'favicon.png'
+    apple_touch_icon = 'favicon.png'
+    logo = 'favicon.png'
   assets = 'favicon.png'
 
   [[params.assets.fonts]]
